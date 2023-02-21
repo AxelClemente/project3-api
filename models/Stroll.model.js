@@ -45,7 +45,7 @@ const strollSchema = new Schema(
     },
     stops6: {
         type: String,
-        required: [true, "Stops are required."],
+        // required: [true, "Stops are required."],
     },
     img1: {
       type: String,
@@ -53,23 +53,23 @@ const strollSchema = new Schema(
     },
     img2: {
       type: String,
-      required: [true, "Image is required."],
+      // required: [true, "Image is required."],
     },
     img3: {
       type: String,
-      required: [true, "Image is required."],
+      // required: [true, "Image is required."],
     },
     img4: {
       type: String,
-      required: [true, "Image is required."],
+      // required: [true, "Image is required."],
     },
     img5: {
       type: String,
-      required: [true, "Image is required."],
+      // required: [true, "Image is required."],
     },
     img6: {
       type: String,
-      required: [true, "Image is required."],
+      // required: [true, "Image is required."],
     },
     budget: { 
         type: Number,
