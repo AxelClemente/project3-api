@@ -7,7 +7,7 @@ const User = require("../models/User.model");
 
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
-//Update User
+// Update User
 router.put("/users", isAuthenticated, (req, res, next) => {
   const { profilePicture } = req.body;
   const userId = req.payload._id;
@@ -19,7 +19,7 @@ router.put("/users", isAuthenticated, (req, res, next) => {
     .catch((err) => console.error(err));
 });
 
-//Get all the users
+// Get all the users
 router.get("/users", isAuthenticated, (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and is made available on `req.payload`
@@ -62,5 +62,35 @@ router.post("/:userId", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+// Get strolls associated with a user
+router.get("/strolls/user/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const strolls = await Stroll.find({ user: userId }).populate("user");
+    res.json({ strolls });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Get user by ID including their list of favorite strolls
+router.get("/users/:userId", isAuthenticated, async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const user = await User.findById(userId).populate("list");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 module.exports = router;
