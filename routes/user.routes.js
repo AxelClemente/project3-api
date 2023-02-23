@@ -63,6 +63,34 @@ router.post("/:userId", async (req, res) => {
   }
 });
 
+//remove a Stroll from the favorites
+router.delete("/users/:userId/:strollId", async (req, res) => {
+  const { userId, strollId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const index = user.list.indexOf(strollId);
+    if (index < 0) {
+      return res.status(404).json({ message: "Stroll not found in list" });
+    }
+
+    user.list.splice(index, 1);
+    await user.save();
+
+    const populatedUser = await User.findById(userId).populate("list");
+    res.status(200).json(populatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 // Get strolls associated with a user
 router.get("/strolls/user/:userId", async (req, res) => {
   const { userId } = req.params;

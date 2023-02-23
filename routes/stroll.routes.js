@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const User = require("../models/Stroll.model");
+const User = require("../models/User.model");
 const Rating = require("../models/Rating.model");
 const Stroll = require("../models/Stroll.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
