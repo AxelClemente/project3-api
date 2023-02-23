@@ -18,15 +18,27 @@ router.get("/", (req, res, next) => {
 })
 
 // Create Strolls
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
+  try {
+
     const newStroll = req.body;
-    Stroll.create(newStroll)
-    .then(newStroll =>{
-        console.log(res.data);
-        res.json(newStroll);
-    })
-    .catch(err => console.log(err))
-})
+    console.log("This is the new stroll:",newStroll)
+    const stroll = await Stroll.create(newStroll);
+    console.log("This is the new stroll after using create:",stroll)
+    const userId = req.body.userId;
+    console.log("testing userId:",userId)
+    const user = await User.findById(userId);
+    console.log("testing user:",user)
+    user.stroll.push(stroll._id);
+    await user.save();
+    res.json(stroll);
+
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 
 // Updated Strolls
 router.put("/:id", async (req, res, next) => {
@@ -97,5 +109,4 @@ router.put("/:id", async (req, res) => {
 module.exports = router;
 
 
-module.exports = router;
 

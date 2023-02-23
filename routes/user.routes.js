@@ -91,6 +91,8 @@ router.delete("/users/:userId/:strollId", async (req, res) => {
 
 
 
+
+
 // Get strolls associated with a user
 router.get("/strolls/user/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -119,6 +121,37 @@ router.get("/users/:userId", isAuthenticated, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+//Pus the strollId into the stroll property of the user model
+router.post("/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const { strollId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.stroll.includes(strollId)) {
+      return res.status(400).json({ message: "Stroll already in list" });
+    }
+
+    user.stroll.push(strollId);
+    await user.save();
+    const populatedUser = await User.findById(userId).populate("stroll");
+    res.status(200).json(populatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+//test axel
+
+
+
 
 
 module.exports = router;
