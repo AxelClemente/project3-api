@@ -18,39 +18,86 @@ router.get("/", (req, res, next) => {
 })
 
 // Create Strolls
+// router.post("/", async (req, res, next) => {
+//   try {
+
+//     const newStroll = req.body;
+//     // console.log("This is the new stroll:",newStroll)
+    
+//     const stroll = await Stroll.create(newStroll);
+//     console.log("This is the new stroll after using create:",stroll)
+
+//     const userId = req.body.userId;
+//     console.log("testing userId:",userId)
+
+
+//    // Now add the Id value of the new object to other model: User - property: stroll
+//     const user = await User.findById(userId);
+//     console.log("testing user:",user)
+//     user.stroll.push(stroll._id);
+//     await user.save();
+
+//   // Response to client!
+//     res.json(stroll);
+//     console.log("Quiero saber esta info ",stroll)
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+//Test to add both propertys at the same time
 router.post("/", async (req, res, next) => {
   try {
-
     const newStroll = req.body;
-    console.log("This is the new stroll:",newStroll)
-    const stroll = await Stroll.create(newStroll);
-    console.log("This is the new stroll after using create:",stroll)
-    const userId = req.body.userId;
-    console.log("testing userId:",userId)
+    const userId = newStroll.userId;
+
     const user = await User.findById(userId);
-    console.log("testing user:",user)
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const stroll = await Stroll.create(newStroll);
     user.stroll.push(stroll._id);
     await user.save();
-    res.json(stroll);
 
+    // Update the `user` property in the `Stroll` model
+    stroll.user = user._id;
+    await stroll.save();
+
+    res.json(stroll);
   } catch (error) {
     console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+
+router.get("/user/:userId", async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const strolls = await Stroll.find({ user: userId });
+    res.json({ strolls });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
 
 
 // Updated Strolls
-router.put("/:id", async (req, res, next) => {
-    try {
-      const updatedStroll = req.body;
-      const updatedDoc = await Stroll.findByIdAndUpdate(req.params.id, updatedStroll, { new: true });
-      res.json(updatedDoc);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Internal Server Error");
-    }
-  });
+// router.put("/:id", async (req, res, next) => {
+//     try {
+//       const updatedStroll = req.body;
+//       const updatedDoc = await Stroll.findByIdAndUpdate(req.params.id, updatedStroll, { new: true });
+//       res.json(updatedDoc);
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).send("Internal Server Error");
+//     }
+//   });
 
 // Stroll Detail
 router.get("/:id", (req, res)=> {

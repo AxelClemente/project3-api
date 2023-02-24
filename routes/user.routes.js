@@ -89,22 +89,6 @@ router.delete("/users/:userId/:strollId", async (req, res) => {
   }
 });
 
-
-
-
-
-// Get strolls associated with a user
-router.get("/strolls/user/:userId", async (req, res) => {
-  const { userId } = req.params;
-  try {
-    const strolls = await Stroll.find({ user: userId }).populate("user");
-    res.json({ strolls });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
 // Get user by ID including their list of favorite strolls
 router.get("/users/:userId", isAuthenticated, async (req, res) => {
   const userId = req.params.userId;
