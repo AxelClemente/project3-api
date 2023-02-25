@@ -10,7 +10,7 @@ const strollSchema = new Schema(
     },
     country: {
       type: String,
-      required: [true, "City is required."],
+      required: [true, "Country is required."],
       lowercase: true,
       trim: true,
     },
