@@ -9,6 +9,12 @@ const strollSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+    country: {
+      type: String,
+      required: [true, "Country is required."],
+      lowercase: true,
+      trim: true,
+    },
     city: {
       type: String,
       required: [true, "City is required."],
@@ -16,6 +22,30 @@ const strollSchema = new Schema(
       trim: true,
     },
     description: {
+      type: String,
+      required: [true, "Description is required."],
+    },
+    description1: {
+      type: String,
+      required: [true, "Description is required."],
+    },
+    description2: {
+      type: String,
+      required: [true, "Description is required."],
+    },
+    description3: {
+      type: String,
+      required: [true, "Description is required."],
+    },
+    description4: {
+      type: String,
+      required: [true, "Description is required."],
+    },
+    description5: {
+      type: String,
+      required: [true, "Description is required."],
+    },
+    description6: {
       type: String,
       required: [true, "Description is required."],
     },
