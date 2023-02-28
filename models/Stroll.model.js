@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-
 const strollSchema = new Schema(
   {
     title: {
@@ -54,28 +53,28 @@ const strollSchema = new Schema(
       required: [true, "Duration is required."],
     },
     stops1: {
-        type: String,
-        required: [true, "Stops are required."],
+      type: String,
+      required: [true, "Stops are required."],
     },
     stops2: {
-        type: String,
-        required: [true, "Stops are required."],
+      type: String,
+      required: [true, "Stops are required."],
     },
     stops3: {
-        type: String,
-        required: [true, "Stops are required."],
+      type: String,
+      required: [true, "Stops are required."],
     },
     stops4: {
-        type: String,
-        required: [true, "Stops are required."],
+      type: String,
+      required: [true, "Stops are required."],
     },
     stops5: {
-        type: String,
-        required: [true, "Stops are required."],
+      type: String,
+      required: [true, "Stops are required."],
     },
     stops6: {
-        type: String,
-        // required: [true, "Stops are required."],
+      type: String,
+      // required: [true, "Stops are required."],
     },
     img1: {
       type: String,
@@ -101,26 +100,26 @@ const strollSchema = new Schema(
       type: String,
       // required: [true, "Image is required."],
     },
-    budget: { 
-        type: Number,
-        required: [true, "Budget is required."],
+    budget: {
+      type: Number,
+      required: [true, "Budget is required."],
     },
     distance: {
-        type: String,
-        required: [true, "Distance is required."],
+      type: String,
+      required: [true, "Distance is required."],
     },
     guide: {
       type: String,
       required: [true, "Guide property is required"],
       validate: {
-        validator: function(value) {
+        validator: function (value) {
           return value === "Available" || value === "No";
         },
-        message: "Guide property must be either 'yes' or 'no'"
-      }
+        message: "Guide property must be either 'yes' or 'no'",
+      },
     },
-    rating: [{ type: Schema.Types.ObjectId, ref: 'Rating' }],
-    user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    rating: [{ type: Schema.Types.ObjectId, ref: "Rating" }],
+    user: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
