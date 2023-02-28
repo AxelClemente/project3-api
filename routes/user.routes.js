@@ -53,10 +53,12 @@ router.post("/:userId", async (req, res) => {
       return res.status(400).json({ message: "Stroll already in list" });
     }
 
-    user.list.push(objectId);
+    user.list.push(objectId); // <----------------------------------------------------- Goal!
     await user.save();
+
     const populatedUser = await User.findById(userId).populate("list");
     res.status(200).json(populatedUser);
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

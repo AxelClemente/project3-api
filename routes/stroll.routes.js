@@ -46,6 +46,87 @@ router.get("/", (req, res, next) => {
 //   }
 // });
 
+
+// Edit a Stroll
+// router.put("/:id/edit", isAuthenticated, async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { title, description, city, duration, distance, budget, guide, country,description1, description2, description3, description4, description5, description6, stops1, stops2, stops3, stops4, stops5, stops6 } = req.body;
+
+//     console.log("Updating stroll with ID:", id);
+//     console.log("New data:", req.body);
+
+//     // Find the stroll by ID
+//     const stroll = await Stroll.findById(id);
+
+//     // If stroll not found, return error response
+//     if (!stroll) {
+//       console.log("Stroll not found with ID:", id);
+//       return res.status(404).json({ message: "Stroll not found" });
+//     }
+
+//     // Check if user is the owner of the stroll
+//     if (req.user.id !== stroll.user.toString()) {
+//       console.log("User not authorized to edit stroll with ID:", id);
+//       return res.status(403).json({ message: "You are not authorized to edit this stroll" });
+//     }
+
+//     // Update the stroll with the new data
+//     stroll.title = title || stroll.title;
+//     stroll.country = country || stroll.country;
+//     stroll.description = description || stroll.description;
+//     stroll.description1 = description1 || stroll.description1;
+//     stroll.description2 = description2 || stroll.description2;
+//     stroll.description3 = description3 || stroll.description3;
+//     stroll.description4 = description4 || stroll.description4;
+//     stroll.description5 = description5 || stroll.description5;
+//     stroll.description6 = description6 || stroll.description6;
+//     stroll.stops1 = stops1 || stroll.stops1;
+//     stroll.stops2 = stops2 || stroll.stops2;
+//     stroll.stops3 = stops3 || stroll.stops3;
+//     stroll.stops4 = stops4 || stroll.stops4;
+//     stroll.stops5 = stops5 || stroll.stops5;
+//     stroll.stops6 = stops6 || stroll.stops6;
+//     stroll.city = city || stroll.city;
+//     stroll.duration = duration || stroll.duration;
+//     stroll.distance = distance || stroll.distance;
+//     stroll.budget = budget || stroll.budget;
+//     stroll.guide = guide || stroll.guide;
+
+//     console.log("Updated stroll data:", stroll);
+
+//     // Save the updated stroll to the database
+//     const updatedStroll = await stroll.save();
+
+//     console.log("Stroll with ID", id, "updated successfully");
+
+//     res.json(updatedStroll);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+  console.log("probando si sirve esto o no....",updatedData)
+
+  try {
+    const updatedStroll = await Stroll.findByIdAndUpdate(id, updatedData, { new: true });
+    if (!updatedStroll) {
+      return res.status(404).json({ message: "Stroll not found" });
+    }
+
+    res.json(updatedStroll);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+
 //Test to add both propertys at the same time
 router.post("/", async (req, res, next) => {
   try {
@@ -101,10 +182,26 @@ router.get("/user/:userId", async (req, res, next) => {
 
 // Stroll Detail
 router.get("/:id", (req, res)=> {
-    Stroll.findById(req.params.id)
+    Stroll.findById(req.params.id).populate("user")
         .then(strolls => res.json(strolls))
         .catch(err => console.error(err))
 })
+
+// router.get("/:id",(req,res) => {
+
+//   try{
+//    const stroll =  Stroll.findById(req.params.id).populate("user");
+//     if (!stroll) {
+//       return res.status(404).json({message: "Stroll not found"})
+//     }
+
+//     res.json(stroll)
+//   } catch(error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+  
+// })
 
 
 // Stroll removed
