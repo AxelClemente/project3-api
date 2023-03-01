@@ -52,22 +52,22 @@ const strollSchema = new Schema(
       type: String,
       // required: [true, "Stops are required."],
     },
-    img1: {
+    imageStroll1: {
       type: String,
     },
-    img2: {
+    imageStroll2: {
       type: String,
     },
-    img3: {
+    imageStroll3: {
       type: String,
     },
-    img4: {
+    imageStroll4: {
       type: String,
     },
-    img5: {
+    imageStroll5: {
       type: String,
     },
-    img6: {
+    imageStroll6: {
       type: String,
     },
     budget: {
