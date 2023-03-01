@@ -5,6 +5,7 @@ const User = require("../models/User.model");
 const Rating = require("../models/Rating.model");
 const Stroll = require("../models/Stroll.model");
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const fileUploader = require("../config/cloudinary.config"); // added to update image
 
 // GET ALL the Strolls
 router.get("/", (req, res, next) => {
@@ -151,7 +152,81 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//updating images stroll object
-router.put("/strolls", (req, res, next) => {});
+// //updating stroll object (image)
+// router.put("/strolls", isAuthenticated, (req, res, next) => {
+//   const {
+//     imageStroll1,
+//     imageStroll2,
+//     imageStroll3,
+//     imageStroll4,
+//     imageStroll5,
+//     imageStroll6,
+//   } = req.body;
+//   const userId = req.payload._id;
+
+//   Stroll.findByIdAndUpdate(
+//     userId,
+//     {
+//       imageStroll1,
+//       imageStroll2,
+//       imageStroll3,
+//       imageStroll4,
+//       imageStroll5,
+//       imageStroll6,
+//     },
+//     { new: true }
+//   )
+//     .then(
+//       ({
+//         title,
+//         country,
+//         city,
+//         description,
+//         duration,
+//         stops1,
+//         stops2,
+//         stops3,
+//         stops4,
+//         stops5,
+//         stops6,
+//         imageStroll1,
+//         imageStroll2,
+//         imageStroll3,
+//         imageStroll4,
+//         imageStroll5,
+//         imageStroll6,
+//         budget,
+//         distance,
+//         guide,
+//         rating,
+//         user,
+//       }) =>
+//         res.json({
+//           title,
+//           country,
+//           city,
+//           description,
+//           duration,
+//           stops1,
+//           stops2,
+//           stops3,
+//           stops4,
+//           stops5,
+//           stops6,
+//           imageStroll1,
+//           imageStroll2,
+//           imageStroll3,
+//           imageStroll4,
+//           imageStroll5,
+//           imageStroll6,
+//           budget,
+//           distance,
+//           guide,
+//           rating,
+//           user,
+//         })
+//     )
+//     .catch((err) => console.error(err));
+// });
 
 module.exports = router;
