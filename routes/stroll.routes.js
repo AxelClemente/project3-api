@@ -152,6 +152,6 @@ router.put("/:id", async (req, res) => {
 });
 
 //updating images stroll object
-router.put("/api/strolls", (req, res, next) => {});
+router.put("/strolls", (req, res, next) => {});
 
 module.exports = router;
