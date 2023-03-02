@@ -78,7 +78,7 @@ const strollSchema = new Schema(
     },
     img1: {
       type: String,
-      required: [true, "Image is required."],
+      // required: [true, "Image is required."],
     },
     img2: {
       type: String,
