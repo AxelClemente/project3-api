@@ -28,22 +28,12 @@ module.exports = (app) => {
   //   })
   // );
 
-  app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL);
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
+  app.use(
+    cors({
+    origin: ["http://localhost:3000", process.env.ORIGIN],
 
-
-
-    // app.use(
-    //   cors({
-    //     origin: FRONTEND_URL, // allow requests from this origin
-    //     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    //     credentials: true, // enable cookie sending in the request
-    //     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    //   })
-  });
+  })
+  );
 
   // In development environment the app logs
   app.use(logger("dev"));
