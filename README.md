@@ -59,7 +59,7 @@ May the force be with you! Happy coding and travelling!
 
 You can contact us at: XXX
 
-*** 10 Links *** 
+*** 10 Links **** 
 
 The project is deployed at: 
 https://stroll-app.netlify.app/
